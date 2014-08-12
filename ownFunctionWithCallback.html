@@ -1,0 +1,50 @@
+<h1>Hi, this is a guide how to create your own functions with callback</h1>
+<h2>Open developers console to see results (press F12)</h2>
+<script>
+  //define your function with some parameters and callback
+  var funcWithCallback = function(param1, param2, callback) {
+    if (typeof callback !== 'function') {
+      console.log(typeof callback);
+      return new Error('callback is not a function');
+    }
+    
+    if (!param1) {
+      return callback(new Error('param1 is missing in funcWithCallback()'));
+    }
+    
+    if (!param2) {
+      return callback(new Error('param2 is missing in funcWithCallback()'));
+    }
+    
+    //do stuff and call the callback
+    callback(null, 'result'); 
+  }
+  
+  var returnVal = funcWithCallback('a','b', function(err, res) {
+    console.log('==== calling with correct parameters ====');
+    console.log('err: ', err);
+    console.log('result: ', res);
+  });
+  
+  console.log('returnVal: ', returnVal); //undefined
+  
+  returnVal = funcWithCallback(null, 'b', function(err, res) {
+    console.log('==== calling with param1 null ====');
+    console.log('err: ', err);
+    console.log('result: ', res);
+  });
+  
+  console.log('returnVal: ', returnVal); //undefined
+  
+  console.log('==== calling without callback ====');
+  returnVal = funcWithCallback('a', 'b');
+  
+  console.log('returnVal: ', returnVal); //Error
+  
+  //check for Error
+  if (returnVal instanceof Error) {
+    //and do something with Error
+    console.error('An error ocured: ', returnVal);
+  }
+  
+</script>

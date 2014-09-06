@@ -1,0 +1,25 @@
+<h1>Hi, this is a guide how to use JavaScript prototype</h1>
+<h2>Open developers console to see results (press F12)</h2>
+
+<script>
+  var Person = function(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  Person.prototype.sayHello = function() {
+    return 'Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.';
+  }
+
+  Person.prototype.rename = function(name) {
+    this.name = name;
+  }
+
+  var person = new Person('Peter', 18);
+  var person2 = new Person('Josh', 21);
+  console.log(person.sayHello());
+  console.log(person2.sayHello());
+
+  person.rename('Veronica');
+  console.log(person.sayHello());
+</script>

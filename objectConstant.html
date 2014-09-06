@@ -1,0 +1,19 @@
+<h1>Hi, this is a guide how to define a constant variable in JavaScript object</h1>
+<h2>Open developers console to see results (press F12)</h2>
+
+<script>
+  var person = {
+    name: 'Peter',
+    age: 18
+  };
+
+  //source: http://bjorn.tipling.com/advanced-objects-in-javascript
+  Object.defineProperty(person, 'gender', {
+    value: 'man'
+  });
+
+  console.log(person.gender);
+  person.gender = 'woman';
+  console.log(person.gender);
+
+</script>

@@ -1,0 +1,45 @@
+<h1>Hi, this is a guide how to use JavaScript inheritance</h1>
+<h2>Open developers console to see results (press F12)</h2>
+<div id="code"></div>
+
+<script>
+  var Person = function(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  Person.prototype.sayHello = function() {
+    return 'Hi, my name is ' + this.name + ' and I am ' + this.age + ' years old.';
+  }
+
+  //define Student that inherits from Person
+  var Student = function(name, age, school) {
+    Person.call(this, name, age);
+    this.school = school;
+  }
+
+  //inherit prototype
+  Student.prototype = Object.create(Person.prototype);
+
+  Student.prototype.getNameAndSchool = function() {
+    return this.name + ' studies at ' + this.school;
+  }
+
+  // Set the "constructor" property to refer to Student
+  Student.prototype.constructor = Student; //try to comment this and see in console: Student.prototype.constructor
+
+  var student1 = new Student('Peter', 19, 'Standford');
+  console.log('student1.name: ', student1.name);
+  console.log('student1.age: ', student1.age);
+  console.log('student1.school: ', student1.school);
+  console.log('student1.sayHello(): ', student1.sayHello());
+  console.log('student1.getNameAndSchool(): ', student1.getNameAndSchool());
+
+  // Check that instanceof works correctly
+  console.log('student1 instanceof Person: ', student1 instanceof Person);  // true
+  console.log('student1 instanceof Student: ', student1 instanceof Student); // true
+
+  var person = new Person('Josh', 20, 'Oxford');
+  //console.log('person.getNameAndSchool(): ', person.getNameAndSchool()); //throws error
+
+</script>

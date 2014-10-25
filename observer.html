@@ -1,0 +1,40 @@
+<h1>Hi, this is a guide how to use Observer in JavaScript</h1>
+<h2>Open developers console to see results (press F12)</h2>
+
+<div id="main">
+  <div id="inner-content">
+    <ul id="list">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  var main = document.getElementById('main');
+  var innerContent = document.getElementById('inner-content');
+  var list = document.getElementById('list');
+
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      console.log('mutation type: ', mutation.type);
+      console.log('mutation target: ', mutation.target.id);
+    });
+  });
+
+  observer.observe(document, { childList: true, attributes: true, subtree: true });
+  //you can comment observe list and it will still will work because
+  //we observe document subtree and attributes
+  observer.observe(list, { childList: true, attributes: true });
+
+  //change attribute in 1.5 second so you can see observed change in 1.5 sec.
+  setTimeout(function() {
+    list.setAttribute('data-id', 5);
+  }, 1500);
+
+  //another change in 3 secs.
+  setTimeout(function() {
+    main.innerHTML = main.innerHTML + '<p>Main changed.</p>';
+  }, 3000);
+</script>

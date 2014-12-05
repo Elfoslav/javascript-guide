@@ -1,0 +1,43 @@
+<h1>Hi, this is a guide how multiple setTimeouts work</h1>
+<h2>Open developers console to see results (press F12)</h2>
+
+<p>setTimeouts dependent on external variables can be tricky.</p>
+
+<script>
+  var externalVar = 1;
+
+  setTimeout(function() {
+    console.log('================= BAD ================ externalVar: ', externalVar, new Date());
+  }, 2000);
+
+  setTimeout(function() {
+    externalVar += 1;
+    console.log('================= BAD ================ externalVar changed: ', externalVar);
+  }, 3000);
+
+  setTimeout(function() {
+    console.log('================= BAD ================ externalVar: ', externalVar, new Date());
+  }, 4000);
+
+  setTimeout(function() {
+    var internalVar = externalVar;
+    console.log('================= BAD ================ internalVar: ', internalVar, new Date());
+  }, 4000);
+
+  //closure fix
+  console.log('externalVar changed: ', externalVar);
+  (function() {
+    //fix is to define local variable in closure
+    var internalVar = externalVar;
+    console.log('================= FIX ================ internalVar saved: ', internalVar);
+
+    setTimeout(function() {
+      console.log('================= FIX ================ externalVar: ', externalVar, new Date());
+    }, 2000);
+
+    setTimeout(function() {
+      console.log('================= FIX ================ internalVar: ', internalVar, new Date());
+    }, 4000);
+  })(); //run this closure immediately
+
+</script>
